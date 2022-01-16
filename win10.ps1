@@ -1,4 +1,6 @@
 # original script - https://github.com/ChrisTitusTech/win10script
+# can be run
+#      iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/33IpZX9'))
 
 $wshell = New-Object -ComObject Wscript.Shell
 
@@ -146,32 +148,6 @@ Write-Host "Disabling Error reporting..."
 
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Type DWord -Value 1
 Disable-ScheduledTask -TaskName "Microsoft\Windows\Windows Error Reporting\QueueReporting" | Out-Null
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Write-Host "Stopping and disabling Diagnostics Tracking Service..."
-
-Stop-Service "DiagTrack" -WarningAction SilentlyContinue
-Set-Service "DiagTrack" -StartupType Disabled
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Write-Host "Stopping and disabling WAP Push Service..."
-
-Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
-Set-Service "dmwappushservice" -StartupType Disabled
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Write-Host "Stopping and disabling Home Groups services..."
-
-Stop-Service "HomeGroupListener" -WarningAction SilentlyContinue
-Set-Service "HomeGroupListener" -StartupType Disabled
-Stop-Service "HomeGroupProvider" -WarningAction SilentlyContinue
-Set-Service "HomeGroupProvider" -StartupType Disabled
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -330,6 +306,32 @@ foreach ($Bloat in $Bloatware) {
 }
 
 Write-Host "Finished Removing Bloatware Apps"
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Write-Host "Stopping and disabling Diagnostics Tracking Service..."
+
+Stop-Service "DiagTrack" -WarningAction SilentlyContinue
+Set-Service "DiagTrack" -StartupType Disabled
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Write-Host "Stopping and disabling WAP Push Service..."
+
+Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
+Set-Service "dmwappushservice" -StartupType Disabled
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Write-Host "Stopping and disabling Home Groups services..."
+
+Stop-Service "HomeGroupListener" -WarningAction SilentlyContinue
+Set-Service "HomeGroupListener" -StartupType Disabled
+Stop-Service "HomeGroupProvider" -WarningAction SilentlyContinue
+Set-Service "HomeGroupProvider" -StartupType Disabled
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
