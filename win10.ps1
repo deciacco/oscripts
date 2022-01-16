@@ -250,12 +250,9 @@ $Bloatware = @(
     "Microsoft.BingHealthAndFitness"
     "Microsoft.BingTravel"
     "Microsoft.MinecraftUWP"
-    "Microsoft.GamingServices"
-    # "Microsoft.WindowsReadingList"
     "Microsoft.GetHelp"
     "Microsoft.Getstarted"
     "Microsoft.Messaging"
-    "Microsoft.Microsoft3DViewer"
     "Microsoft.MicrosoftSolitaireCollection"
     "Microsoft.NetworkSpeedTest"
     "Microsoft.News"
@@ -317,14 +314,8 @@ $Bloatware = @(
     "*HiddenCity*"
     "*AdobePhotoshopExpress*"
     "*HotspotShieldFreeVPN*"
-
-    #Optional: Typically not removed but you can if you need to for some reason
     "*Microsoft.Advertising.Xaml*"
-    #"*Microsoft.MSPaint*"
-    #"*Microsoft.MicrosoftStickyNotes*"
-    #"*Microsoft.Windows.Photos*"
-    #"*Microsoft.WindowsCalculator*"
-    #"*Microsoft.WindowsStore*"
+    "*Microsoft.MicrosoftStickyNotes*"
 )
 
 Write-Host "Removing Bloatware"
@@ -336,6 +327,35 @@ foreach ($Bloat in $Bloatware) {
 }
 
 Write-Host "Finished Removing Bloatware Apps"
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$services = @(
+    "diagnosticshub.standardcollector.service"     # Microsoft (R) Diagnostics Hub Standard Collector Service
+    "DiagTrack"                                    # Diagnostics Tracking Service
+    "WMPNetworkSvc"                                # Windows Media Player Network Sharing Service
+    "XblAuthManager"                               # Xbox Live Auth Manager
+    "XblGameSave"                                  # Xbox Live Game Save Service
+    "XboxNetApiSvc"                                # Xbox Live Networking Service
+    "XboxGipSvc"                                   # Disables Xbox Accessory Management Service
+    "Fax"                                          # Disables fax
+    "fhsvc"                                        # Disables fax histroy
+    "AJRouter"                                     # Disables (needed for AllJoyn Router Service)
+    "WpcMonSvc"                                    # Disables Parental Controls
+    "PhoneSvc"                                     # Disables Phone Service (Manages the telephony state on the device)
+    "wisvc"                                        # Disables Windows Insider program (Windows Insider will not work)
+    "RetailDemo"                                   # Disables RetailDemo whic is often used when showing your device
+    "BcastDVRUserService_48486de"                  # Disables GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
+)
+
+foreach ($service in $services) {
+    # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
+
+    Write-Host "Setting $service StartupType to Manual"
+    Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual
+}
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
