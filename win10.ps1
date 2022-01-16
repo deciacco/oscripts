@@ -43,7 +43,7 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\Allo
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Write-Host "Disabling Application suggestions..."
+Write-Host "Disabling Application Suggestions..."
 
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type DWord -Value 0
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type DWord -Value 0
@@ -61,6 +61,17 @@ If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent")) {
 }
 
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type DWord -Value 1
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Write-Host "Disabling Web Search Results..."
+
+If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
+    New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
+}
+
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Type DWord -Value 1
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -228,14 +239,6 @@ icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Write-Host "Stopping and disabling Diagnostics Tracking Service..."
-
-Stop-Service "DiagTrack"
-Set-Service "DiagTrack" -StartupType Disabled
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 $Bloatware = @(
     #Unnecessary Windows 10 AppX Apps
     "Microsoft.3DBuilder"
@@ -350,12 +353,16 @@ $services = @(
     "BcastDVRUserService_48486de"                  # Disables GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
 )
 
+Write-Host "Setting Services To Manual"
+
 foreach ($service in $services) {
     # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
 
     Write-Host "Setting $service StartupType to Manual"
     Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual
 }
+
+Write-Host "Finished Settings Services"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
