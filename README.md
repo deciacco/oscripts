@@ -6,4 +6,3 @@ script to keep win 10 more private
 - can be run in PS:  
      `iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/33IpZX9'))`
 
-     
