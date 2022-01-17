@@ -2,6 +2,7 @@
 
 - script to help keep win 10 more private and "cleaned up"
 - original script - https://github.com/ChrisTitusTech/win10script
+- not as agressive as the orignal script
 
 # Using
 
