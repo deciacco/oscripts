@@ -13,3 +13,4 @@
 - run the code: `iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/33IpZX9'))`  
      
      ![x](https://github.com/deciacco/win10cleanup/blob/main/img/Screenshot%20-%201_16_2022%20,%205_51_55%20PM.png?raw=true)
+
